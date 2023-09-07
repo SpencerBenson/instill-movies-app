@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MovieList from './MovieList';
-import { fetchMovies } from '../apis/Api';
+import { fetchMovies } from '../apis/fetchMovies';
 
 interface Movie {
   Title: string;
