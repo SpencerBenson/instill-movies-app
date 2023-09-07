@@ -4,6 +4,11 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "types": [
+      "node",
+      "react",
+      "react-dom"
+    ],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -20,6 +25,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "jest.config.cjs"],
+  "types": ["jest", "node"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

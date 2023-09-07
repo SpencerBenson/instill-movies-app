@@ -3,6 +3,7 @@
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
+    "types": ["jest","mocha"],
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },
