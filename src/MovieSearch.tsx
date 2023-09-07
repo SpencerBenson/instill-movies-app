@@ -8,6 +8,7 @@ const MovieSearch: React.FC = () => {
   const [type, setType] = useState<string>('');
   const [year, setYear] = useState<string>('');
   const [movies, setMovies] = useState<any[]>([]);
+  const [error, setError] = useState<string>('');
 
   const apiKey = 'fb03d60f';
 
@@ -40,7 +41,7 @@ const MovieSearch: React.FC = () => {
         }
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        setError(`Error fetching data: ${error.message}`);
       });
   };
 
@@ -86,7 +87,8 @@ const MovieSearch: React.FC = () => {
           </div>
 
           <div className="row">
-            {movies.map((movie) => (
+            {error && <div className="alert alert-danger">{error}</div>}
+            {!error && movies.map((movie) => (
               <div key={movie.imdbID} className="col-md-4 mb-4">
                 <div className="card">
                   <img
@@ -105,6 +107,8 @@ const MovieSearch: React.FC = () => {
               </div>
             ))}
           </div>
+
+
         </div>
       </div>
     </div>
