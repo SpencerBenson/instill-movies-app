@@ -1,16 +1,14 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import axios from 'axios';
 import MovieSearch from './MovieSearch';
 import 'jest';
 import '@testing-library/jest-dom';
 
-
 jest.mock('axios');
 
 describe('MovieSearch Component', () => {
   it('renders the component correctly', () => {
-
     const { getByText, getByPlaceholderText } = render(<MovieSearch />);
 
     // Check if the component title is rendered
@@ -23,49 +21,55 @@ describe('MovieSearch Component', () => {
   });
 
   it('fetches and displays search results on button click', async () => {
-
-
     // Mock axios.get to return sample search results
     axios.get.mockResolvedValue({
       data: {
         Search: [
           {
-            imdbID: '',
-            Title: 'the godfather',
+            imdbID: '123',
+            Title: 'The Godfather',
             Type: 'movie',
-            Year: ''
+            Year: '1972'
           },
         ],
       },
     });
-    const { getByText, getByPlaceholderText, queryByText } = render(<MovieSearch />);
 
-    // Fill in the search input and click the search button
+    const { getByText, getByPlaceholderText, queryByText, findByText, getByRole } = render(<MovieSearch />);
+
+    // Fill in the search input
     const searchInput = getByPlaceholderText('Search for a movie...');
-    fireEvent.change(searchInput, { target: { value: 'the godfather' } });
-    fireEvent.click(getByText('Search'));
+    fireEvent.change(searchInput, { target: { value: 'The Godfather' } });
+
+    // Find the "Search" button
+    const searchButton = getByRole('button', { name: 'Search' });
+
+    // Trigger a click event on the "Search" button
+    fireEvent.click(searchButton);
 
     // Wait for the component to update with search results
-    await waitFor(() => {
-      expect(getByText('the godfather')).toBeInTheDocument();
-    }); // Increase the timeout as needed
-
+    await findByText('The Godfather'); // Wait for the title to appear
+    expect(getByText('Year: 1972')).toBeInTheDocument();
+    expect(queryByText('Error fetching data:')).not.toBeInTheDocument();
   });
 
   it('handles API error gracefully', async () => {
-    const { getByText, getByPlaceholderText } = render(<MovieSearch />);
-
-    // Mock axios.get to simulate an API error
     axios.get.mockRejectedValue({ message: 'API Error' });
 
-    // Fill in the search input and click the search button
+    const { getByText, getByPlaceholderText, findByText, getByRole } = render(<MovieSearch />);
+
+    // Fill in the search input
     const searchInput = getByPlaceholderText('Search for a movie...');
     fireEvent.change(searchInput, { target: { value: 'Movie Title' } });
-    fireEvent.click(getByText('Search'));
+
+    // Find the "Search" button
+    const searchButton = getByRole('button', { name: 'Search' });
+
+    // Trigger a click event on the "Search" button
+    fireEvent.click(searchButton);
 
     // Wait for the error message to be displayed
-    await waitFor(() => {
-      expect(getByText('Error fetching data: API Error')).toBeInTheDocument();
-    });
+    await findByText(/Error fetching data: API Error/);
+
   });
 });
