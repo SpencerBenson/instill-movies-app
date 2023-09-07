@@ -6,6 +6,13 @@ const config: Config.InitialOptions = {
     '!**/node_modules/**',
     '!**/vendor/**',
   ],
+  moduleNameMapper: {
+    "^.+\\.svg$": "jest-svg-transformer",
+    "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+  },
+  // setupFilesAfterEnv: [
+  //   "<rootDir>/setupTests.ts"
+  // ],
   testEnvironment: 'jsdom',
   verbose: true,
   transform: {
