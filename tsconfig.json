@@ -9,6 +9,7 @@
       "react",
       "react-dom"
     ],
+      "typeRoots": ["./types", "./node_modules/@types"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -25,7 +26,16 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "types": ["jest", "node"],
-  "include": ["src"],
+  "types": [
+      "jest",
+       "node"
+      ],
+  "include":  [
+    "./src/**/*.tsx", 
+    "./src/**/*.ts",
+    "src/**/*",
+    "**/*.test.ts",
+     "jest.config.ts"
+    ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
