@@ -16,14 +16,20 @@ const MovieSearch: React.FC = () => {
   const [year, setYear] = useState<string>('');
   const [movies, setMovies] = useState<Movie[]>([]);
 
-  const [error, setError] = useState<string>(''); // Provide type annotation
+  const [noData, setNoData] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const moviesData: Movie[] = await fetchMovies(query, type, year);
       setMovies(moviesData);
-      setError(''); // Clear any previous errors
+      if (moviesData.length > 0) {
+        setNoData(false)
+        setError('');
+      } else {
+        setNoData(true)
+      }
     } catch (err) {
       if (err instanceof Error) {
         setError(`Error fetching data: ${err.message}`);
@@ -77,6 +83,9 @@ const MovieSearch: React.FC = () => {
           </form>
 
           <div className="row">
+            {noData && <div className="alert alert-secondary" role="alert">
+              We couldn't find any media matching your search term. Please refine your search and try again!
+            </div>}
             {error && <div className="alert alert-danger">{error}</div>}
             {!error && <MovieList movies={movies} />}
           </div>
