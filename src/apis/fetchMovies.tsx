@@ -30,7 +30,7 @@ export const fetchMovies = async (
       params.y = year;
     }
 
-    const apiUrl: string = "http://www.omdbapi.com/";
+    const apiUrl: string = "https://www.omdbapi.com/";
 
     const response = await axios.get(apiUrl, { params });
     const { Search } = response.data;
