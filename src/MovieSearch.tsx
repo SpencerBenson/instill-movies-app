@@ -10,8 +10,7 @@ const MovieSearch: React.FC = () => {
   const [movies, setMovies] = useState<any[]>([]);
   const [error, setError] = useState<string>('');
 
-  const apiKey = 'fb03d60f';
-
+  const apiKey: string = "fb03d60f";
   const handleSearch = () => {
     const params: any = {
       apikey: apiKey,
@@ -27,7 +26,7 @@ const MovieSearch: React.FC = () => {
       params.y = year;
     }
 
-    const apiUrl = 'http://www.omdbapi.com/';
+    const apiUrl: string = "http://www.omdbapi.com/";
 
     axios
       .get(apiUrl, { params })
