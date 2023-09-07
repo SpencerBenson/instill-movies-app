@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// const apiKey: string = "fb03d60f";
-const apiKey: string = import.meta.env.VITE_OMDB_API_KEY;
+const apiKey: string = "fb03d60f";
 
 interface Movie {
   Title: string;
