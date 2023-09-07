@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiKey: string = process.env.OMDB_API_KEY as string
+const apiKey: string = "fb03d60f"
 
 interface Movie {
   Title: string;
@@ -30,7 +30,7 @@ export const fetchMovies = async (
       params.y = year;
     }
 
-    const apiUrl: string = process.env.OMDB_APIURL as string;
+    const apiUrl: string = "http://www.omdbapi.com/";
 
     const response = await axios.get(apiUrl, { params });
     const { Search } = response.data;
